@@ -3,7 +3,7 @@
 from os import getenv
 from flask import Flask, render_template
 from .twitter import add_or_update_user
-from .models import DB, User, Tweet
+from .models import DB, User
 
 
 def create_app():
