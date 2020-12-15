@@ -7,6 +7,10 @@ name = "pypi"
 flask = "*"
 flask-sqlalchemy = "*"
 jinja2 = "*"
+tweepy = "*"
+spacy = "*"
+python-dotenv = "*"
+numpy = "==1.19.3"
 
 [dev-packages]
 
