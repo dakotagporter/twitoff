@@ -18,10 +18,16 @@ def vectorize_tweet(tweet_text):
 
 def add_or_update_user(username):
     try:
-        """Adds or updates user (username) to our database."""
+        """
+        Adds or updates user (username) to our database.
+
+        Args:
+            username (str): name of desired user to add or update
+        """
         twitter_user = TWITTER.get_user(username)
-        db_user = (User.query.get(twitter_user.id)) or User(
-            id=twitter_user.id, name=username)
+        db_user = (User.query.get(twitter_user.id)) or User(id=twitter_user.id,
+                                                            name=username)
+
         DB.session.add(db_user)
 
         tweets = twitter_user.timeline(
@@ -31,8 +37,10 @@ def add_or_update_user(username):
             tweet_mode="Extended"
         )
 
+        if tweets:
+            db_user.newest_tweet_id = tweets[0].id            
+
         for tweet in tweets:
-            db_user.newest_tweet_id = tweets[0].id
             vectorized_tweet = vectorize_tweet(tweet.text)
             db_tweet = Tweet(id=tweet.id, text=tweet.text,
                              vect=vectorized_tweet)

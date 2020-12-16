@@ -13,7 +13,7 @@ class User(DB.Model):
     # name column
     name = DB.Column(DB.String, nullable=False)
     # keeps track of users most recent tweets
-    newest_tweet_id = DB.Column(DB.BigInteger)
+    newest_tweet_id = DB.Column(DB.BigInteger)  # FIX!!
 
     def __repr__(self):
         return f"<User: {self.name}>"
