@@ -3,7 +3,7 @@
 from os import getenv
 from flask import Flask, render_template, request
 from .twitter import add_or_update_user, update_users
-from .models import DB, User
+from .models import DB, User, MIGRATE
 from .predict import predict_user
 
 
@@ -16,6 +16,7 @@ def create_app():
     app.config["SQLALCHEMY_DATABASE_URI"] = getenv("DATABASE_URL")
     app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
     DB.init_app(app)
+    MIGRATE.init_app(app, DB)
 
     @app.route("/")
     def root():
