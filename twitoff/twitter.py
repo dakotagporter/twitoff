@@ -34,11 +34,12 @@ def add_or_update_user(username):
             count=200,
             exclude_replies=True,
             include_rts=False,
-            tweet_mode="Extended"
+            tweet_mode="Extended",
+            since_id=db_user.newest_tweet_id
         )
 
         if tweets:
-            db_user.newest_tweet_id = tweets[0].id            
+            db_user.newest_tweet_id = tweets[0].id
 
         for tweet in tweets:
             vectorized_tweet = vectorize_tweet(tweet.text)
@@ -53,3 +54,8 @@ def add_or_update_user(username):
 
     else:
         DB.session.commit()
+
+
+def update_users():
+    for user in User.query.all():
+        add_or_update_user(user.name)
